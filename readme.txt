@@ -4,8 +4,6 @@ Tags: analytics, statistics, stats, tracking, widget, views, visits, counter
 Requires at least: 3.3
 Tested up to: 3.4
 Stable tag: trunk
-Version: 2.0.0
-Author URI: http://www.4stats.de/
 
 
 Website statistics from 4stats for your blog including many features. Displays a widget, a complete statistic dashboard and adds the necessary tracking code to your site.
