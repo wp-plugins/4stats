@@ -6,7 +6,7 @@ Tested up to: 3.4
 Stable tag: trunk
 
 
-Website statistics from 4stats for your blog including many features. Displays a widget, a complete statistic dashboard and adds the necessary tracking code to your site.
+Website stats from 4stats including many features. Displays a widget, a complete statistic page and adds the tracking code to your site.
 
 
 == Description ==
@@ -16,7 +16,7 @@ Website statistics from 4stats for your blog including many features. Displays a
 Use the popular 4stats website stats on your wordpress blog. 
 Just enter your project id and the api key and the 4stats tracking code will be automaticly be added to your site. Now you can watch your stats on the wordpress dashboard and on the 4stats plugin statistics page.
 
-You have to be registered with 4stats.de to use this plugin.
+You have to be registered with http://www.4stats.de/ to use this plugin.
 
 
 
@@ -52,7 +52,7 @@ The automatic plugin installer should work for most people. Manual installation 
 2. Into this new directory upload the plugin files (`4stats.php`, etc.)
 3. Activate the plugin through the 'Plugins' menu in WordPress.
 4. Enter your 4stats.de Project-ID and the API key. Don't use somebody else's data or key!
-5. Now your visitors should be tracked und you can view your stats on the dashboard and the 4stats statistics page
+5. Now your visitors should be tracked and you can view your stats on the dashboard and the 4stats statistics page
 
 
 
