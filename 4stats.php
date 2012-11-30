@@ -2,9 +2,9 @@
 /*
 Plugin Name: 4stats
 Plugin URI: http://www.4stats.de/wordpress/
-Description: This plugins adds the 4stats.de website statistics to your admin interface and the tracking code to your blog.
-Author: Nico Puhlmann
-Version: 2.0.0
+Description: This plugins adds the 4stats.de website statistics to your wp-admin interface and the tracking code to your blog.
+Author: 4stats
+Version: 2.0.2
 Author URI: http://www.4stats.de/
 */
 
@@ -137,6 +137,7 @@ if(!class_exists('Fourstats'))
 				$options['4stats_project_id'] = $_POST['4stats_project_id'];
 				$options['4stats_api_key'] = $_POST['4stats_api_key'];
 				$options['4stats_hide_counter'] = $_POST['4stats_hide_counter'];
+				$options['4stats_disable_tracking'] = $_POST['4stats_disable_tracking'];
 				update_option('4stats', $options);
 			}
 			
@@ -169,6 +170,13 @@ if(!class_exists('Fourstats'))
 									<label for="4stats_hide_counter">Counter Visibility:</label><br/>
 									<input size="50" type="checkbox" id="4stats_hide_counter" name="4stats_hide_counter" value="1" <?php echo ($options['4stats_hide_counter'] == "1") ? 'checked="checked"' : ""; ?>/> Hide Counter<br/>
 									<small>Please only choose this option if you have a visible counter and don't want to show it in this blog.</small>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<label for="4stats_disable_tracking">Tracking Code:</label><br/>
+									<input type="checkbox" id="4stats_disable_tracking" name="4stats_disable_tracking" value="1" <?php echo ($options['4stats_disable_tracking'] == "1") ? 'checked="checked"' : ""; ?>/> Disable Tracking<br/>
+									<small>Please only choose this option if you allready have the tracking code installed manually.</small>
 								</td>
 							</tr>
 						</table>
@@ -332,7 +340,7 @@ if(!class_exists('Fourstats'))
 		
 		function tracking_code() {
 			$options  = get_option('4stats');
-			if(isset($options['4stats_project_id']) && $options['4stats_project_id'])
+			if(isset($options['4stats_project_id']) && $options['4stats_project_id'] && $options['4stats_disable_tracking'] != 1)
 			{
 				echo "<script type=\"text/javascript\">document.write(unescape('%3Cscr' + 'ipt src=\"http'+(document.location.protocol=='https:'?'s':'')+'://4stats.de/de/counter?id={$options['4stats_project_id']}";
 				echo ($options['4stats_hide_counter'] == "1") ? '&amp;cntr=hide' : "";
