@@ -126,7 +126,7 @@ if(!class_exists('Fourstats'))
 		
 		function config_page()
 		{
-			self:$tab = 'settings';
+			self::$tab = 'settings';
 			self::stats_page();
 		}
 		
