@@ -4,7 +4,7 @@ Plugin Name: 4stats
 Plugin URI: http://www.4stats.de/wordpress/
 Description: This plugins adds the 4stats.de website statistics to your wp-admin interface and the tracking code to your blog.
 Author: 4stats
-Version: 2.0.2
+Version: 2.0.3
 Author URI: http://www.4stats.de/
 */
 

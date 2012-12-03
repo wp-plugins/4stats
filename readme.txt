@@ -58,6 +58,9 @@ The automatic plugin installer should work for most people. Manual installation 
 
 == Changelog ==
 
+= 2.0.3 =
+* Bugfix http://wordpress.org/support/topic/4stats-update-202
+
 = 2.0.2 =
 * Disable tracking code function
 
