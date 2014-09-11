@@ -5,9 +5,10 @@ google.load("visualization", "1", {packages:["corechart"]});
 var thejquery = jQuery;
 var isError = false;
 
-var fourStats = function(pid, apikey, location, current_datetime) {
+var fourStats = function(pid, token, apikey, location, current_datetime) {
 	
 	var pid = pid,
+  token = token,
 	apikey  = apikey,
 	weatherLocation = location,
 	browserWidth = 0,
@@ -71,7 +72,7 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 	
 	parseUri = function(str) {
 		var parser = document.createElement('a');
-		parser.href = 'http://' + str;
+		parser.href = (str.match(/^https?:\/\//i) !== null) ? str : ('http://' + str);
 		return parser;
 	}
 	
@@ -81,14 +82,14 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 		var day = date.getDate();
 		var month = date.getMonth()+1;
 		var year = date.getFullYear();
-		
-		thejquery.getJSON('https://www.4stats.de/api/numbers?pid=' + pid + '&apikey=' + apikey + '&mon=' + month + '-' + year + '&day=' + day + '&jsoncallback=?', function(data) {
+    
+		thejquery.getJSON('https://www.4stats.de/api/numbers?pid=' + pid + '&token=' + token + '&apikey=' + apikey + '&mon=' + month + '-' + year + '&day=' + day + '&jsoncallback=?', function(data) {
 			
 			if(checkError(data.results)) {
 				return;
 			}
 			
-			chart_data = new Array(['Hour', 'Page Impressions', 'Visits']);
+			chart_data = new Array(['Hour', 'Page views', 'Visits']);
 			for(i=0; i< data.results['items'].length; i++) {
 				stat = data.results['items'][i];
 				chart_data.push([i, parseInt(stat.h), parseInt(stat.v)]);
@@ -107,8 +108,8 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 				lineWidth: 3,
 				gridlineColor: '#ececec',
 				colors:['#eeeeee', '#4caeff'],
-				reverseCategories: true,
-				backgroundColor: 'transparent',
+				reverseCategories: false,
+				backgroundColor: '#ffffff',
 				vAxis: {
 					baselineColor: 'transparent',
 					textPosition: 'in',
@@ -138,7 +139,7 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 			}
 			
 			items_data = {"Visitors":data.results['visits_today'], 
-						  "Page Impressions":data.results['hits_today'], 
+						  "Page views":data.results['hits_today'], 
 						  "Ø Pages/Visit":data.results['hits_per_visit_today'], 
 						  "Ø Time on Site (Min.)":data.results['avg_time_today']};
 
@@ -158,7 +159,7 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 				return;
 			}
 			
-			var header = ["Visitors","Returning Visitors","New Visitors","Page Impressions","Ø Pages/Visit","Ø Time on Site (Min.)"];
+			var header = ["Visits","Returning Visitors","New Visits","Page views","Ø Pages/Visit","Ø Time on Site (Min.)"];
 			var items_template = {"Today":"today", "Yesterday":"yesterday", "This month":"thismonth", "Last month":"lastmonth", "This year":"thisyear", "Total":"total"};
 			
 			var items_data = {};
@@ -235,7 +236,7 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 				return;
 			}
 
-			chart_data = new Array(['Hour', 'Page Impressions', 'Visits']);
+			chart_data = new Array(['Hour', 'Page views', 'Visits']);
 			for(i=0; i< data.results['items'].length; i++) {
 				stat = data.results['items'][i];
 				chart_data.push([stat.name, parseInt(stat.h), parseInt(stat.v)]);
@@ -254,8 +255,8 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 				lineWidth: 3,
 				gridlineColor: '#ececec',
 				colors:['#eeeeee', '#4caeff'],
-				reverseCategories: true,
-				backgroundColor: 'transparent',
+				reverseCategories: false,
+				backgroundColor: '#ffffff',
 				vAxis: {
 					baselineColor: 'transparent',
 					textPosition: 'in',
@@ -284,7 +285,7 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 				return;
 			}
 			
-			chart_data = new Array(['Hour', 'Page Impressions', 'Visits']);
+			chart_data = new Array(['Hour', 'Page views', 'Visits']);
 			for(i=0; i< data.results['items'].length; i++) {
 				stat = data.results['items'][i];
 				chart_data.push([stat.name, parseInt(stat.h), parseInt(stat.v)]);
@@ -303,8 +304,8 @@ var fourStats = function(pid, apikey, location, current_datetime) {
 				lineWidth: 3,
 				gridlineColor: '#ececec',
 				colors:['#eeeeee', '#4caeff'],
-				reverseCategories: true,
-				backgroundColor: 'transparent',
+				reverseCategories: false,
+				backgroundColor: '#ffffff',
 				vAxis: {
 					baselineColor: 'transparent',
 					textPosition: 'in',

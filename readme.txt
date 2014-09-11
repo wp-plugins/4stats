@@ -2,21 +2,21 @@
 Contributors: 4stats
 Tags: analytics, statistics, stats, tracking, widget, views, visits, counter
 Requires at least: 3.3
-Tested up to: 3.5
+Tested up to: 4.0
 Stable tag: trunk
 
 
-Website stats from 4stats including many features. Displays a widget, a complete statistic page and adds the tracking code to your site.
+Website statistics from 4stats including many features. Displays a widget, a complete statistic page and adds the tracking code to your site.
 
 
 == Description ==
 
-= Real time webstats =
+= Real Time Web Analytics =
 
-Use the popular 4stats website stats on your wordpress blog. 
-Just enter your project id and the api key and the 4stats tracking code will be automaticly be added to your site. Now you can watch your stats on the wordpress dashboard and on the 4stats plugin statistics page.
+Use the popular 4stats Web Analytics on your wordpress blog. 
+Just enter your project token and api key and the 4stats tracking code will be automaticly be added to your site. Now you can watch your stats on the wordpress dashboard and on the 4stats plugin statistics page.
 
-You have to be registered with http://www.4stats.net/ to use this plugin.
+You have to be registered with http://www.4stats.de/en/ to use this plugin.
 
 
 
@@ -58,6 +58,11 @@ The automatic plugin installer should work for most people. Manual installation 
 
 == Changelog ==
 
+= 2.0.5 =
+* Site token integration
+* Bugfixes in chart and referer display
+* Testing for Wordpress 4.0
+
 = 2.0.4 =
 * Changed links to english language version
 
@@ -77,6 +82,6 @@ The automatic plugin installer should work for most people. Manual installation 
 
 == Screenshots ==
 
-1. 4stats Dashboard with more statictic data
+1. 4stats Dashboard with more statistic data
 2. 4stats settings
 3. 4stats on wordpress dashboard

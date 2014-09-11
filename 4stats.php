@@ -68,7 +68,7 @@ if(!class_exists('Fourstats'))
 		 * Installation hook, will be called on plugin-installation
 		 *
 		 */
-		function install()
+		public static function install()
 		{
 			global $wpdb;
 			//
@@ -78,7 +78,7 @@ if(!class_exists('Fourstats'))
 		 * Installation hook, will be called on plugin-uninstall
 		 *
 		 */
-		function uninstall()
+		public static function uninstall()
 		{
 			global $wpdb;
 			//
@@ -88,7 +88,7 @@ if(!class_exists('Fourstats'))
 		 * Ads navigation item
 		 *
 		 */
-		function add_page_to_navi()
+		public function add_page_to_navi()
 		{
 			global $wpdb;
 			if ( function_exists('add_options_page') )
@@ -104,7 +104,7 @@ if(!class_exists('Fourstats'))
 			
 		}
 
-		function add_config_page_to_plugins($links, $file)
+		public static function add_config_page_to_plugins($links, $file)
 		{
 			if($file ==  plugin_basename(__FILE__))
 			{
@@ -114,43 +114,45 @@ if(!class_exists('Fourstats'))
 			return $links;
 		}
 		
-		function the_tabs()
+		public static function the_tabs()
 		{
 			?>
 			<h2 class="nav-tab-wrapper">
-				<a class="nav-tab<?= (!$_GET['tab'] || $_GET['tab'] == "stats") ? " nav-tab-active" : ""; ?>" href="admin.php?page=4stats/4stats.php&amp;tab=stats">Stats</a>
-				<a class="nav-tab<?= ($_GET['tab'] == "settings") ? " nav-tab-active" : ""; ?>" href="options-general.php?page=4stats/4stats.php&amp;tab=settings"><?= __('Settings'); ?></a>
+				<a class="nav-tab<?php echo (!$_GET['tab'] || $_GET['tab'] == "stats") ? " nav-tab-active" : ""; ?>" href="admin.php?page=4stats/4stats.php&amp;tab=stats">Stats</a>
+				<a class="nav-tab<?php echo ($_GET['tab'] == "settings") ? " nav-tab-active" : ""; ?>" href="options-general.php?page=4stats/4stats.php&amp;tab=settings"><?php echo __('Settings'); ?></a>
 			</h2>
 			<?
 		}
 		
-		function config_page()
+		public static function config_page()
 		{
 			self::$tab = 'settings';
 			self::stats_page();
 		}
 		
-		function stats_page()
+		public static function stats_page()
 		{
 			if(isset($_POST['submit']))
 			{
 				$options['4stats_project_id'] = $_POST['4stats_project_id'];
+				$options['4stats_token'] = $_POST['4stats_token'];
 				$options['4stats_api_key'] = $_POST['4stats_api_key'];
-				$options['4stats_hide_counter'] = $_POST['4stats_hide_counter'];
+				$options['4stats_show_counter'] = $_POST['4stats_show_counter'];
 				$options['4stats_disable_tracking'] = $_POST['4stats_disable_tracking'];
 				update_option('4stats', $options);
 			}
 			
 			$options  = get_option('4stats');
 			
-			if($_GET['tab'] == 'settings' || self::$tab == 'settings' || !$options['4stats_project_id'] || !$options['4stats_api_key'])
+			if($_GET['tab'] == 'settings' || self::$tab == 'settings' || ( !$options['4stats_project_id'] && !$options['4stats_token'] ) || !$options['4stats_api_key'])
 			{
 				?>
 				<div class="wrap">
 					<h2>4stats Configuration</h2>
-					<? self::the_tabs(); ?>
+					<?php self::the_tabs(); ?>
 					<form action="" method="post" id="4stats-conf">
 						<table class="form-table">
+							<?php if( isset($options['4stats_project_id']) && !empty($options['4stats_project_id']) ): ?>
 							<tr>
 								<td colspan="2">
 									<label for="4stats_project_id">4stats Project ID:</label><br/>
@@ -158,18 +160,27 @@ if(!class_exists('Fourstats'))
 									<small>Please enter your 4stats project id.</small>
 								</td>
 							</tr>
+							<?php else: ?>
+							<tr>
+								<td colspan="2">
+									<label for="4stats_project_id">4stats Project Token:</label><br/>
+									<input size="50" type="text" id="4stats_token" name="4stats_token" <?php echo 'value="'.$options['4stats_token'].'" '; ?>/><br/>
+									<small>Please enter your 4stats project token from your <a href="https://www.4stats.de/conf/project-settings/" target="_blank">project settings page</a>.</small>
+								</td>
+							</tr>
+							<?php endif; ?>
 							<tr>
 								<td colspan="2">
 									<label for="4stats_api_key">4stats API-Key:</label><br/>
 									<input size="50" type="text" id="4stats_api_key" name="4stats_api_key" <?php echo 'value="'.$options['4stats_api_key'].'" '; ?>/><br/>
-									<small>Please enter your 4stats API-Key. It can found in the <a href="https://www.4stats.de/conf/project-settings/" target="_blank">project settings page</a>.</small>
+									<small>Please enter your 4stats API-Key from your <a href="https://www.4stats.de/conf/project-settings/" target="_blank">project settings page</a>.</small>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									<label for="4stats_hide_counter">Counter Visibility:</label><br/>
-									<input size="50" type="checkbox" id="4stats_hide_counter" name="4stats_hide_counter" value="1" <?php echo ($options['4stats_hide_counter'] == "1") ? 'checked="checked"' : ""; ?>/> Hide Counter<br/>
-									<small>Please only choose this option if you have a visible counter and don't want to show it in this blog.</small>
+									<input size="50" type="checkbox" id="4stats_show_counter" name="4stats_show_counter" value="1" <?php echo ($options['4stats_show_counter'] == "1") ? 'checked="checked"' : ""; ?>/> Show Counter<br/>
+									<small>Please select this option if you want to display a counter and have chosen a counter graphic in your project settings.</small>
 								</td>
 							</tr>
 							<tr>
@@ -215,7 +226,7 @@ if(!class_exists('Fourstats'))
 				?>
 				<div class="wrap">
 					<h2>4stats</h2>
-					<? self::the_tabs(); ?>
+					<?php self::the_tabs(); ?>
 					<div id="content4stats">
 						<h3><?php _e('Day Performance'); ?></h3>
 						<div id="chart_visitor_div" style="height: 180px; width: 100%;"></div>
@@ -254,7 +265,7 @@ if(!class_exists('Fourstats'))
 				</div>
 				<script type="text/javascript">
 				jQuery(document).ready(function() { 
-					fs = new fourStats(<?= $options['4stats_project_id']; ?>, '<?= $options['4stats_api_key']; ?>', '', '<?= date("D, d M Y H:i:s"); ?>');
+					fs = new fourStats('<?php echo $options['4stats_project_id']; ?>', '<?php echo $options['4stats_token']; ?>', '<?php echo $options['4stats_api_key']; ?>', '', '<?php echo date("D, d M Y H:i:s"); ?>');
 					fs.statsPage();
 				});				
 				</script>
@@ -331,23 +342,45 @@ if(!class_exists('Fourstats'))
 			</p>
 			<script type="text/javascript">
 			jQuery(document).ready(function() { 
-				fs = new fourStats(<?= $options['4stats_project_id']; ?>, '<?= $options['4stats_api_key']; ?>', '', '<?= date("D, d M Y H:i:s"); ?>');
+				fs = new fourStats('<?php echo $options['4stats_project_id']; ?>', '<?php echo $options['4stats_token']; ?>', '<?php echo $options['4stats_api_key']; ?>', '', '<?php echo date("D, d M Y H:i:s"); ?>');
 				fs.dashBoard();
 			});				
 			</script>
 			<?
 		}
 		
-		function tracking_code() {
+		public static function tracking_code_header()
+		{
 			$options  = get_option('4stats');
-			if(isset($options['4stats_project_id']) && $options['4stats_project_id'] && $options['4stats_disable_tracking'] != 1)
+			if( ( ( isset($options['4stats_project_id']) && $options['4stats_project_id'] ) || ( isset($options['4stats_token']) && $options['4stats_token'] ) ) && $options['4stats_disable_tracking'] != 1 )
 			{
-				echo "<script type=\"text/javascript\">document.write(unescape('%3Cscr' + 'ipt src=\"http'+(document.location.protocol=='https:'?'s':'')+'://4stats.de/de/counter?id={$options['4stats_project_id']}";
-				echo ($options['4stats_hide_counter'] == "1") ? '&amp;cntr=hide' : "";
-				echo "\" type=\"text/javascript\"%3E%3C/script%3E'));</script>\n";
-				echo "<noscript><div><img src=\"http://4stats.de/de/stats?id={$options['4stats_project_id']}";
-				echo ($options['4stats_hide_counter'] == "1") ? '&amp;cntr=hide' : "";
-				echo "\" style=\"border: none;\" alt=\"4stats\" /></div></noscript>\n";
+				$id_string = ( isset($options['4stats_project_id']) && $options['4stats_project_id'] ) ? "siteId='{$options['4stats_project_id']}'" : "token='{$options['4stats_token']}'";
+				
+				if( !isset($options['4stats_show_counter']) || $options['4stats_show_counter'] != '1' )
+				{
+					?><script type="text/javascript">
+var _fss=_fss||{}; _fss.<?php echo $id_string; ?>;
+(function(){var e="fourstats",a=window,c=["track","identify","config","register"],b=function(){var d=0,f=this;for(f._fs=[],d=0;c.length>d;d++){(function(j){f[j]=function(){return f._fs.push([j].concat(Array.prototype.slice.call(arguments,0))),f}})(c[d])}};a[e]=a[e]||new b;var i=document;var h=i.createElement("script");h.type="text/javascript";h.async=true;h.src=('https:' === document.location.protocol ? 'https://' : 'http://')+"4stats.de/track.js";var g=i.getElementsByTagName("script")[0];g.parentNode.insertBefore(h,g)})();
+</script><?php
+				}
+			}
+		}
+
+		public static function tracking_code_footer()
+		{
+			$options  = get_option('4stats');
+			
+			if( ( ( isset($options['4stats_project_id']) && $options['4stats_project_id'] ) 
+					|| ( isset($options['4stats_token']) && $options['4stats_token'] ) ) 
+							&& $options['4stats_disable_tracking'] != 1 )
+			{
+				$id = ( isset($options['4stats_project_id']) && $options['4stats_project_id'] ) ? $options['4stats_project_id'] : $options['4stats_token'];
+				
+				if( isset($options['4stats_show_counter']) && $options['4stats_show_counter'] == '1' )
+				{
+					?><script type="text/javascript">document.write(unescape('%3Cscr' + 'ipt src="'+('https:' === document.location.protocol ? 'https://' : 'http://')+'4stats.de/de/counter?id=<?php echo $id; ?>" type="text/javascript"%3E%3C/script%3E'));</script>
+<noscript><div><img src="https://4stats.de/de/stats?id=<?php echo $id; ?>" style="border: none;" alt="4stats" /></div></noscript><?php
+				}
 			}
 		}
 	}
@@ -359,6 +392,7 @@ if(is_admin()) {
 	add_action( 'plugins_loaded', array('Fourstats', 'get_object') );
 	add_filter( 'plugin_action_links', array( 'Fourstats', 'add_config_page_to_plugins'), 11, 2 );
 } else {
-	add_action('wp_footer', array('Fourstats', 'tracking_code'));
+	add_action('wp_head', array('Fourstats', 'tracking_code_header'));
+	add_action('wp_footer', array('Fourstats', 'tracking_code_footer'));
 }
 ?>
