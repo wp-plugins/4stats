@@ -132,7 +132,7 @@ var fourStats = function(pid, token, apikey, location, current_datetime) {
 	
 	showFSWPDashboard = function() {
 		showFSDayPerfGraph();
-		thejquery.getJSON('https://www.4stats.de/api/dashboard?pid=' + pid + '&apikey=' + apikey + '&jsoncallback=?', function(data) {
+		thejquery.getJSON('https://www.4stats.de/api/dashboard?pid=' + pid + '&token=' + token + '&apikey=' + apikey + '&jsoncallback=?', function(data) {
 			
 			if(checkError(data.results)) {
 				return;
@@ -153,7 +153,7 @@ var fourStats = function(pid, token, apikey, location, current_datetime) {
 	
 	showFSDashboard = function() {
 		
-		thejquery.getJSON('https://www.4stats.de/api/dashboard?pid=' + pid + '&apikey=' + apikey + '&jsoncallback=?', function(data) {
+		thejquery.getJSON('https://www.4stats.de/api/dashboard?pid=' + pid + '&token=' + token + '&apikey=' + apikey + '&jsoncallback=?', function(data) {
 			
 			if(checkError(data.results)) {
 				return;
@@ -230,7 +230,7 @@ var fourStats = function(pid, token, apikey, location, current_datetime) {
 		var tomonth = date.getMonth()+1;
 		var toyear = date.getFullYear();
 		
-		thejquery.getJSON('https://www.4stats.de/api/numbers?pid=' + pid + '&apikey=' + apikey + '&from=' + fromyear + '-' + frommonth + '-' + fromday + '&to=' + toyear + '-' + tomonth + '-' + today + '&jsoncallback=?', function(data) {
+		thejquery.getJSON('https://www.4stats.de/api/numbers?pid=' + pid + '&token=' + token + '&apikey=' + apikey + '&from=' + fromyear + '-' + frommonth + '-' + fromday + '&to=' + toyear + '-' + tomonth + '-' + today + '&jsoncallback=?', function(data) {
 
 			if(checkError(data.results)) {
 				return;
@@ -279,7 +279,7 @@ var fourStats = function(pid, token, apikey, location, current_datetime) {
 		date.setTime(Date.parse(new Date())+tzOffset);
 		var year = date.getFullYear();
 		
-		thejquery.getJSON('https://www.4stats.de/api/numbers?pid=' + pid + '&apikey=' + apikey + '&year=' + year + '&jsoncallback=?', function(data) {
+		thejquery.getJSON('https://www.4stats.de/api/numbers?pid=' + pid + '&token=' + token + '&apikey=' + apikey + '&year=' + year + '&jsoncallback=?', function(data) {
 			
 			if(checkError(data.results)) {
 				return;
@@ -329,7 +329,7 @@ var fourStats = function(pid, token, apikey, location, current_datetime) {
 	
 	showFSBoxStats = function(name, title, numtitle) {
 		
-		thejquery.getJSON('https://www.4stats.de/api/' + name + '?pid=' + pid + '&apikey=' + apikey + '&jsoncallback=?', function(data) {
+		thejquery.getJSON('https://www.4stats.de/api/' + name + '?pid=' + pid + '&token=' + token + '&apikey=' + apikey + '&jsoncallback=?', function(data) {
 			
 			if(checkError(data.results)) {
 				return;
@@ -353,7 +353,7 @@ var fourStats = function(pid, token, apikey, location, current_datetime) {
 	
 	showFSVisitorLog = function() {
 		
-		thejquery.getJSON('https://www.4stats.de/api/visitor_log?pid=' + pid + '&apikey=' + apikey + '&jsoncallback=?', function(data) {
+		thejquery.getJSON('https://www.4stats.de/api/visitor_log?pid=' + pid + '&token=' + token + '&apikey=' + apikey + '&jsoncallback=?', function(data) {
 			
 			if(checkError(data.results)) {
 				return;

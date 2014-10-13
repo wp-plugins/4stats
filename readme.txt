@@ -58,6 +58,9 @@ The automatic plugin installer should work for most people. Manual installation 
 
 == Changelog ==
 
+= 2.0.6 =
+* Site token bugfix
+
 = 2.0.5 =
 * Site token integration
 * Bugfixes in chart and referer display
