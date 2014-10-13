@@ -40,14 +40,14 @@ var fourStats = function(pid, token, apikey, location, current_datetime) {
 	};
 	
 	getBrowserIconClass = function(str) {
-		if(typeof(str) == 'undefined' || (typeof(str) != 'object' && typeof(str) != 'string')) {
+		if(typeof(str) == 'undefined' || str === null || (typeof(str) != 'object' && typeof(str) != 'string')) {
 			return '';
 		}
 		return 'browser-logo browser-' + str.toLowerCase().replace(/\s[0-9\.]+$/, '').replace(/\s/g, "-");
 	}
 	
 	getOsIconClass = function(str) {
-		if(typeof(str) == 'undefined' || (typeof(str) != 'object' && typeof(str) != 'string')) {
+		if(typeof(str) == 'undefined' || str === null || (typeof(str) != 'object' && typeof(str) != 'string')) {
 			return '';
 		}
 		if(str.search(/^windows/i) != -1) {
