@@ -4,7 +4,7 @@ Plugin Name: 4stats
 Plugin URI: http://www.4stats.net/wordpress/
 Description: This plugins adds the 4stats website statistics to your wp-admin interface and the tracking code to your blog.
 Author: 4stats
-Version: 2.0.7
+Version: 2.0.8
 Author URI: http://www.4stats.net/
 */
 
@@ -144,36 +144,36 @@ if(!class_exists('Fourstats'))
 			
 			$options  = get_option('4stats');
 			
-			if($_GET['tab'] == 'settings' || self::$tab == 'settings' || ( !$options['4stats_project_id'] && !$options['4stats_token'] ) || !$options['4stats_api_key'])
+			if($_GET['tab'] == 'settings' || self::$tab == 'settings' || !$options['4stats_api_key'])
 			{
 				?>
 				<div class="wrap">
-					<h2>4stats Configuration</h2>
+					<h2>4stats (Stetic) Configuration</h2>
 					<?php self::the_tabs(); ?>
 					<form action="" method="post" id="4stats-conf">
 						<table class="form-table">
 							<?php if( isset($options['4stats_project_id']) && !empty($options['4stats_project_id']) ): ?>
 							<tr>
 								<td colspan="2">
-									<label for="4stats_project_id">4stats Project ID:</label><br/>
+									<label for="4stats_project_id">Stetic Project ID:</label><br/>
 									<input size="50" type="text" id="4stats_project_id" name="4stats_project_id" <?php echo 'value="'.$options['4stats_project_id'].'" '; ?>/><br/>
-									<small>Please enter your 4stats project id.</small>
+									<small>Please enter your Stetic project id.</small>
 								</td>
 							</tr>
 							<?php else: ?>
 							<tr>
 								<td colspan="2">
-									<label for="4stats_project_id">4stats Project Token:</label><br/>
+									<label for="4stats_project_id">Stetic Project Token:</label><br/>
 									<input size="50" type="text" id="4stats_token" name="4stats_token" <?php echo 'value="'.$options['4stats_token'].'" '; ?>/><br/>
-									<small>Please enter your 4stats project token from your <a href="https://www.4stats.de/conf/project-settings/" target="_blank">project settings page</a>.</small>
+									<small>Please enter your Stetic project token from your <a href="https://www.stetic.com/conf/project-settings/" target="_blank">project settings page</a>.</small>
 								</td>
 							</tr>
 							<?php endif; ?>
 							<tr>
 								<td colspan="2">
-									<label for="4stats_api_key">4stats API-Key:</label><br/>
+									<label for="4stats_api_key">Stetic API-Key:</label><br/>
 									<input size="50" type="text" id="4stats_api_key" name="4stats_api_key" <?php echo 'value="'.$options['4stats_api_key'].'" '; ?>/><br/>
-									<small>Please enter your 4stats API-Key from your <a href="https://www.4stats.de/conf/project-settings/" target="_blank">project settings page</a>.</small>
+									<small>Please enter your Stetic API-Key from your <a href="https://www.stetic.com/conf/project-settings/" target="_blank">project settings page</a>.</small>
 								</td>
 							</tr>
 							<tr>
@@ -225,7 +225,7 @@ if(!class_exists('Fourstats'))
 				                false);
 				?>
 				<div class="wrap">
-					<h2>4stats</h2>
+					<h2>4stats (Stetic)</h2>
 					<?php self::the_tabs(); ?>
 					<div id="content4stats">
 						<h3><?php _e('Day Performance'); ?></h3>
@@ -360,7 +360,7 @@ if(!class_exists('Fourstats'))
 				{
 					?><script type="text/javascript">
 var _fss=_fss||{}; _fss.<?php echo $id_string; ?>;
-(function(){var e="fourstats",a=window,c=["track","identify","config","register"],b=function(){var d=0,f=this;for(f._fs=[],d=0;c.length>d;d++){(function(j){f[j]=function(){return f._fs.push([j].concat(Array.prototype.slice.call(arguments,0))),f}})(c[d])}};a[e]=a[e]||new b;var i=document;var h=i.createElement("script");h.type="text/javascript";h.async=true;h.src=('https:' === document.location.protocol ? 'https://' : 'http://')+"4stats.de/track.js";var g=i.getElementsByTagName("script")[0];g.parentNode.insertBefore(h,g)})();
+(function(){var e="stetic",a=window,c=["track","identify","config","set","unset","register","unregister","increment","alias"],b=function(){var d=0,f=this;for(f._fs=[],d=0;c.length>d;d++){(function(j){f[j]=function(){return f._fs.push([j].concat(Array.prototype.slice.call(arguments,0))),f}})(c[d])}};a[e]=a[e]||new b;a.fourstats=a.fourstats||new b;var i=document;var h=i.createElement("script");h.type="text/javascript";h.async=true;h.src="//stetic.com/t.js";var g=i.getElementsByTagName("script")[0];g.parentNode.insertBefore(h,g)})();
 </script><?php
 				}
 			}
@@ -378,8 +378,8 @@ var _fss=_fss||{}; _fss.<?php echo $id_string; ?>;
 				
 				if( isset($options['4stats_show_counter']) && $options['4stats_show_counter'] == '1' )
 				{
-					?><script type="text/javascript">document.write(unescape('%3Cscr' + 'ipt src="'+('https:' === document.location.protocol ? 'https://' : 'http://')+'4stats.de/de/counter?id=<?php echo $id; ?>" type="text/javascript"%3E%3C/script%3E'));</script>
-<noscript><div><img src="https://4stats.de/de/stats?id=<?php echo $id; ?>" style="border: none;" alt="4stats" /></div></noscript><?php
+					?><script type="text/javascript">document.write(unescape('%3Cscr' + 'ipt src="'+'http'+(document.location.protocol=='https:'?'s':'')+'://stetic.com/de/counter?id=<?php echo $id; ?>" type="text/javascript"%3E%3C/script%3E'));</script>
+<noscript><div><img src="http://stetic.com/de/stats?id=100" style="border: none;" alt="Stetic" /></div></noscript><?php
 				}
 			}
 		}
@@ -395,4 +395,3 @@ if(is_admin()) {
 	add_action('wp_head', array('Fourstats', 'tracking_code_header'));
 	add_action('wp_footer', array('Fourstats', 'tracking_code_footer'));
 }
-?>

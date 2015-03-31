@@ -58,6 +58,9 @@ The automatic plugin installer should work for most people. Manual installation 
 
 == Changelog ==
 
+= 2.0.8 =
+* Stetic info and tracking code
+
 = 2.0.6 =
 * Site token bugfix
 
