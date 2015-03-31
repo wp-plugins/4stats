@@ -379,7 +379,7 @@ var _fss=_fss||{}; _fss.<?php echo $id_string; ?>;
 				if( isset($options['4stats_show_counter']) && $options['4stats_show_counter'] == '1' )
 				{
 					?><script type="text/javascript">document.write(unescape('%3Cscr' + 'ipt src="'+'http'+(document.location.protocol=='https:'?'s':'')+'://stetic.com/de/counter?id=<?php echo $id; ?>" type="text/javascript"%3E%3C/script%3E'));</script>
-<noscript><div><img src="http://stetic.com/de/stats?id=100" style="border: none;" alt="Stetic" /></div></noscript><?php
+<noscript><div><img src="http://stetic.com/de/stats?id=<?php echo $id; ?>" style="border: none;" alt="Stetic" /></div></noscript><?php
 				}
 			}
 		}
